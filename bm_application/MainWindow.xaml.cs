@@ -30,7 +30,7 @@ namespace bm_application
             ImageBrush myBrush = new ImageBrush();
             myBrush.ImageSource = new BitmapImage(new Uri(@"Resources\bm_group.png", UriKind.Relative));
             canvas.Background = myBrush;
-            
+            myBrush.Stretch = Stretch.Fill;
         }
     }
 }
