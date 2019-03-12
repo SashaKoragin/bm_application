@@ -13,8 +13,12 @@
         </Grid.ColumnDefinitions>
         <WrapPanel Grid.Column="0" ItemHeight="20" ItemWidth="100" Orientation="Vertical" HorizontalAlignment="Center">
             <Button x:Name="button_home" Margin="0,12,0,-12" Click="button_click_home">Главная</Button>
+            <Button x:Name="button_url_home" Margin="0,24,0,-24" Click="button_click_url_home">Сайт</Button>
+            <Button x:Name="Button_video_Click" Margin="0,38,0,-38" Click="Button_video_Click">Видео</Button>
+
         </WrapPanel>
-        <Canvas Grid.Column="1" Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" ClipToBounds="True">           
+        <Canvas Grid.Column="1" Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" ClipToBounds="True">     
+            
         </Canvas>
     </Grid>
 </Window>
