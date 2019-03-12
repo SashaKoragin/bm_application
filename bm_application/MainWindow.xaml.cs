@@ -24,5 +24,13 @@ namespace bm_application
         {
             InitializeComponent();
         }
+
+        private void button_click_home(object sender, EventArgs e)
+        {
+            ImageBrush myBrush = new ImageBrush();
+            myBrush.ImageSource = new BitmapImage(new Uri(@"Resources\bm_group.png", UriKind.Relative));
+            canvas.Background = myBrush;
+            
+        }
     }
 }

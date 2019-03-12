@@ -7,6 +7,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <WrapPanel Grid.Column="0" ItemHeight="20" ItemWidth="100" Orientation="Vertical" HorizontalAlignment="Center">
+            <Button x:Name="button_home" Margin="0,12,0,-12" Click="button_click_home">Главная</Button>
+        </WrapPanel>
+        <Canvas Grid.Column="1" Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray" ClipToBounds="True">
+            <Image Height="667" Source="bm_group.png" Stretch="Fill" Canvas.Top="-113" Width="692" Canvas.Left="-20"/>
+        </Canvas>
     </Grid>
 </Window>
