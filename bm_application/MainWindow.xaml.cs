@@ -33,7 +33,18 @@ namespace bm_application
         public MainWindow()
         {
             InitializeComponent();
+            TextBlock txtBlock = new TextBlock();
+            ImageBrush myText = new ImageBrush();
+            txtBlock.Height = 400;
+            txtBlock.Width = 630;
+            txtBlock.Text = "Добро пожаловать в BM GROUP!";
+            myText.ImageSource = Convert(Properties.Resources.bm_group);
+            txtBlock.Background = myText;
+            txtBlock.FontSize = 24;
+            txtBlock.TextAlignment = TextAlignment.Center;
+            canvas.Children.Add(txtBlock);
         }
+        
 
         #region Конвертер картинок из ресурсов
         public BitmapImage Convert(object value)
@@ -94,7 +105,7 @@ namespace bm_application
             browser.Width = 630;
             browser.Height = 400;
             browser.Navigated += new NavigatedEventHandler(WebBrowser_Navigated);
-            
+
             btn_back.Click += GoBack_Click;
             btn_forward.Click += GoForward_Click;
         }
@@ -162,6 +173,18 @@ namespace bm_application
                 btn_forward.IsEnabled = false;
             }
 
+        }
+        #endregion
+        
+            #region Форма регистрации
+            private void button_click_form(object sender, EventArgs e)
+        {
+            canvas.Children.Clear();
+            Grid gridform = new Grid { Height = 400, Width = 630, Background = new SolidColorBrush(Colors.White) };
+            Button btn_send = new Button { Height = 25, Width = 75, Content = "Отправить", Background = new SolidColorBrush(Colors.AntiqueWhite) };
+            gridform.Children.Add(btn_send);
+            btn_send.Margin = new Thickness(0, 10, 0, 10);
+            canvas.Children.Add(gridform);
         }
         #endregion
     }
