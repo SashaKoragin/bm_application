@@ -19,6 +19,7 @@ using System.IO;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Timers;
+using System.Threading;
 
 namespace bm_application
 {
@@ -29,9 +30,11 @@ namespace bm_application
     {
         WebBrowser browser = new WebBrowser();
         ImageBrush myBrush = new ImageBrush();
+        ImageBrush myBrush1 = new ImageBrush();
         Button btn_back = new Button();
         Button btn_forward = new Button();
         StackPanel panel = new StackPanel();
+        bool check;
 
         public MainWindow()
         {
@@ -47,9 +50,27 @@ namespace bm_application
             txtBlock.FontSize = 24;
             txtBlock.TextAlignment = TextAlignment.Center;
             canvas.Children.Add(txtBlock);
+            check = true;
+            DelayedExecutionService.DelayedExecute(() =>
+            {
+                if (check == true) { Screensaver(); }                
+            });
         }
 
-
+        public void Screensaver()
+        {
+            canvas.Children.Clear();
+            MediaTimeline timeline = new MediaTimeline(new Uri(@"Resources\bm_video.mp4", UriKind.Relative));
+            timeline.RepeatBehavior = RepeatBehavior.Forever;
+            MediaClock clock = timeline.CreateClock();
+            MediaPlayer player = new MediaPlayer();
+            player.Clock = clock;
+            VideoDrawing drawing = new VideoDrawing();
+            drawing.Rect = new Rect(0, 0, 50, 50);
+            drawing.Player = player;
+            DrawingBrush brush = new DrawingBrush(drawing);
+            canvas.Background = brush;
+        }
         #region Конвертер картинок из ресурсов
         public BitmapImage Convert(object value)
         {
@@ -72,18 +93,21 @@ namespace bm_application
         #endregion
 
         #region Главная
-        private void button_click_home(object sender, EventArgs e)
+        public void button_click_home(object sender, EventArgs e)
         {
+            check = true;
             canvas.Children.Clear();
             myBrush.ImageSource = Convert(Properties.Resources.bm_group);
+            myBrush1.ImageSource = Convert(Properties.Resources.bm_background);
             canvas.Background = myBrush;
-            myBrush.Stretch = Stretch.Fill;
+            //myBrush.Stretch = Stretch.Fill;
         }
         #endregion
 
         #region Сайт
-        private void button_click_url_home(object sender, EventArgs e)
+        public void button_click_url_home(object sender, EventArgs e)
         {
+            check = true;
             canvas.Children.Clear();
             panel.Children.Clear();
             panel.Orientation = Orientation.Vertical;
@@ -119,18 +143,8 @@ namespace bm_application
         #region Видео
         public void button_click_video(object sender, EventArgs e)
         {
+            check = false;
             canvas.Children.Clear();
-            //MediaPlayer player = new MediaPlayer();
-            //player.Open(new Uri(@"C:\Users\Ilgiz.Timrukov\Pictures\bm_video.mp4"));
-            //VideoDrawing drawing = new VideoDrawing();
-            //drawing.Rect = new Rect(0, 0, 300, 200);
-            //drawing.Player = player;
-            //player.Play();
-            //DrawingBrush brush = new DrawingBrush(drawing);
-            //canvas.Background = brush;
-
-            //new Uri("Properties/Recources/bm_video.mp4", UriKind.Relative)
-
             MediaTimeline timeline = new MediaTimeline(new Uri(@"Resources\bm_video.mp4", UriKind.Relative));
             timeline.RepeatBehavior = RepeatBehavior.Forever;
             MediaClock clock = timeline.CreateClock();
@@ -141,23 +155,7 @@ namespace bm_application
             drawing.Player = player;
             DrawingBrush brush = new DrawingBrush(drawing);
             canvas.Background = brush;
-
-
-            //var mediaPlayer = new MediaElement();
-
-            //mediaPlayer.HorizontalAlignment = HorizontalAlignment.Left;
-            //mediaPlayer.VerticalAlignment = VerticalAlignment.Top;
-            //mediaPlayer.Height = 630;
-            //mediaPlayer.Width = 400;
-            //mediaPlayer.Source = new Uri(@"C:\Users\Ilgiz.Timrukov\Pictures\bm_video.mp4", UriKind.Absolute);
-
-            //mediaPlayer.LoadedBehavior = MediaState.Manual;
-            //if (mediaPlayer != null)
-            //{
-
-            //    canvas.Children.Add(mediaPlayer);
-            //    mediaPlayer.Play();
-            //}
+            
         }
         #endregion
 
@@ -209,14 +207,44 @@ namespace bm_application
         #region Форма регистрации
         private void button_click_form(object sender, EventArgs e)
         {
+            check = true;
             canvas.Children.Clear();
-            Grid gridform = new Grid { Height = 400, Width = 630, Background = new SolidColorBrush(Colors.White) };
+            Grid gridform = new Grid { Height = 415, Width = 637, Background = new SolidColorBrush(Colors.White) };
             Button btn_send = new Button { Height = 25, Width = 75, Content = "Отправить", Background = new SolidColorBrush(Colors.AntiqueWhite) };
             gridform.Children.Add(btn_send);
             btn_send.Margin = new Thickness(0, 10, 0, 10);
             canvas.Children.Add(gridform);
         }
         #endregion
-        
+
+        #region Таймер
+        public static class DelayedExecutionService
+        {
+            private static IList<DispatcherTimer> timers = new List<DispatcherTimer>();
+
+            public static void DelayedExecute(Action action, int delay = 60)
+            {
+                var dispatcherTimer = new DispatcherTimer();
+                timers.Add(dispatcherTimer);
+
+                EventHandler handler = null;
+                handler = (sender, e) =>
+                {
+                    action();
+                };
+
+                dispatcherTimer.Tick += handler;
+                dispatcherTimer.Interval = TimeSpan.FromSeconds(delay);
+                dispatcherTimer.Start();
+            }
+        }
+        #endregion
+
+        #region Выход
+        public void button_click_exit(object sender, EventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+        #endregion
     }
 }

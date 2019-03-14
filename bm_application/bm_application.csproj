@@ -96,15 +96,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\bm_group.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\bm_main.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bm_video.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\bm_background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\bm_group.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

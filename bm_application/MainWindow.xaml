@@ -5,21 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bm_application" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="BM GROUP" Height="450" Width="800" ResizeMode="NoResize">
+    <Grid ClipToBounds="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"></ColumnDefinition>
-            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition Width="238*" ></ColumnDefinition>
+            <ColumnDefinition Width="83*"/>
         </Grid.ColumnDefinitions>
-        <WrapPanel Grid.Column="0" ItemHeight="20" ItemWidth="100" Orientation="Vertical" HorizontalAlignment="Center">
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/bm_background.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <WrapPanel Grid.Column="0" ItemHeight="20" ItemWidth="100" Orientation="Vertical" HorizontalAlignment="Center" Margin="25,0">
             <Button x:Name="button_home" Margin="0,12,0,-12" Click="button_click_home">Главная</Button>
             <Button x:Name="button_url_home" Margin="0,24,0,-24" Click="button_click_url_home">Сайт</Button>
             <Button x:Name="button_video" Margin="0,37,0,-37" Click="button_click_video">Видео</Button>
-            <Button x:Name="button_form" Margin="0,51,0,-51" Click="button_click_form" Content="Обращение"/>
+            <Button x:Name="button_form" Margin="0,51,0,-51" Click="button_click_form" Content="Обращение"></Button>
+            <Button x:Name="button_exit" Margin="0,65,0,-64" Click="button_click_exit" Height="19">Выход</Button>
 
         </WrapPanel>
-        <Canvas Grid.Column="1" Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" ClipToBounds="True">     
-            
+        <Canvas Grid.Column="1" Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" ClipToBounds="True" Grid.ColumnSpan="2">
+
         </Canvas>
     </Grid>
 </Window>
