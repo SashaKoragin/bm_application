@@ -16,6 +16,9 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Drawing;
 using System.IO;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
+using System.Timers;
 
 namespace bm_application
 {
@@ -35,21 +38,23 @@ namespace bm_application
             InitializeComponent();
             TextBlock txtBlock = new TextBlock();
             ImageBrush myText = new ImageBrush();
-            txtBlock.Height = 400;
-            txtBlock.Width = 630;
+            txtBlock.Height = 415;
+            txtBlock.Width = 634;
             txtBlock.Text = "Добро пожаловать в BM GROUP!";
-            myText.ImageSource = Convert(Properties.Resources.bm_group);
+            myText.ImageSource = Convert(Properties.Resources.bm_main);
             txtBlock.Background = myText;
+            myText.Stretch = Stretch.Fill;
             txtBlock.FontSize = 24;
             txtBlock.TextAlignment = TextAlignment.Center;
             canvas.Children.Add(txtBlock);
         }
-        
+
 
         #region Конвертер картинок из ресурсов
         public BitmapImage Convert(object value)
         {
             ImageConverter converter = new ImageConverter();
+
             byte[] val = (byte[])converter.ConvertTo(value, typeof(byte[]));
             BitmapImage exist = null;
             using (MemoryStream byteStream = new MemoryStream(val))
@@ -102,8 +107,8 @@ namespace bm_application
 
             browser.Navigate("http://www.bm-technology.ru");
             panel.Children.Add(browser);
-            browser.Width = 630;
-            browser.Height = 400;
+            browser.Width = 634;
+            browser.Height = 387;
             browser.Navigated += new NavigatedEventHandler(WebBrowser_Navigated);
 
             btn_back.Click += GoBack_Click;
@@ -112,22 +117,47 @@ namespace bm_application
         #endregion
 
         #region Видео
-        private void button_click_video(object sender, RoutedEventArgs e)
+        public void button_click_video(object sender, EventArgs e)
         {
-            var mediaPlayer = new MediaElement();
+            canvas.Children.Clear();
+            //MediaPlayer player = new MediaPlayer();
+            //player.Open(new Uri(@"C:\Users\Ilgiz.Timrukov\Pictures\bm_video.mp4"));
+            //VideoDrawing drawing = new VideoDrawing();
+            //drawing.Rect = new Rect(0, 0, 300, 200);
+            //drawing.Player = player;
+            //player.Play();
+            //DrawingBrush brush = new DrawingBrush(drawing);
+            //canvas.Background = brush;
 
-            mediaPlayer.HorizontalAlignment = HorizontalAlignment.Left;
-            mediaPlayer.VerticalAlignment = VerticalAlignment.Top;
-            mediaPlayer.Height = 630;
-            mediaPlayer.Width = 400;
-            mediaPlayer.Source = new Uri("https://www.youtube.com/watch?v=UZSFY8YdSrA", UriKind.Absolute);
+            //new Uri("Properties/Recources/bm_video.mp4", UriKind.Relative)
 
-            mediaPlayer.LoadedBehavior = MediaState.Manual;
-            if (mediaPlayer != null)
-            {
-                canvas.Children.Add(mediaPlayer);
-                mediaPlayer.Play();
-            }
+            MediaTimeline timeline = new MediaTimeline(new Uri(@"Resources\bm_video.mp4", UriKind.Relative));
+            timeline.RepeatBehavior = RepeatBehavior.Forever;
+            MediaClock clock = timeline.CreateClock();
+            MediaPlayer player = new MediaPlayer();
+            player.Clock = clock;
+            VideoDrawing drawing = new VideoDrawing();
+            drawing.Rect = new Rect(0, 0, 50, 50);
+            drawing.Player = player;
+            DrawingBrush brush = new DrawingBrush(drawing);
+            canvas.Background = brush;
+
+
+            //var mediaPlayer = new MediaElement();
+
+            //mediaPlayer.HorizontalAlignment = HorizontalAlignment.Left;
+            //mediaPlayer.VerticalAlignment = VerticalAlignment.Top;
+            //mediaPlayer.Height = 630;
+            //mediaPlayer.Width = 400;
+            //mediaPlayer.Source = new Uri(@"C:\Users\Ilgiz.Timrukov\Pictures\bm_video.mp4", UriKind.Absolute);
+
+            //mediaPlayer.LoadedBehavior = MediaState.Manual;
+            //if (mediaPlayer != null)
+            //{
+
+            //    canvas.Children.Add(mediaPlayer);
+            //    mediaPlayer.Play();
+            //}
         }
         #endregion
 
@@ -175,9 +205,9 @@ namespace bm_application
 
         }
         #endregion
-        
-            #region Форма регистрации
-            private void button_click_form(object sender, EventArgs e)
+
+        #region Форма регистрации
+        private void button_click_form(object sender, EventArgs e)
         {
             canvas.Children.Clear();
             Grid gridform = new Grid { Height = 400, Width = 630, Background = new SolidColorBrush(Colors.White) };
@@ -187,5 +217,6 @@ namespace bm_application
             canvas.Children.Add(gridform);
         }
         #endregion
+        
     }
 }

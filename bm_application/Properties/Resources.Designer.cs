@@ -69,5 +69,25 @@ namespace bm_application.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bm_main {
+            get {
+                object obj = ResourceManager.GetObject("bm_main", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] bm_video {
+            get {
+                object obj = ResourceManager.GetObject("bm_video", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
