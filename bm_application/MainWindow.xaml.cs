@@ -42,6 +42,7 @@ namespace bm_application
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainWindow();
             TextBlock txtBlock = new TextBlock();
             ImageBrush myText = new ImageBrush();
             txtBlock.Height = 415;

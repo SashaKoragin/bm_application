@@ -30,7 +30,6 @@ namespace bm_application
         public MyPageWindow()
         {
             InitializeComponent();
-            this.DataContext = this;
 
         }
 
