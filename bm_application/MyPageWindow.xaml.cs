@@ -26,19 +26,15 @@ namespace bm_application
     /// </summary>
     public partial class MyPageWindow: INotifyPropertyChanged
     {
-        #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        #endregion
 
-        //MainWindow window = new MainWindow();
         public MyPageWindow()
         {
             InitializeComponent();
-
         }
 
         private void Submit(object sender, EventArgs e)
@@ -72,7 +68,7 @@ namespace bm_application
                 MessageBox.Show("Спасибо за обращение. Мы обязательно с Вами свяжемся!");
             }
 
-            System.IO.Directory.CreateDirectory(@"C:\Temp");
+            System.IO.Directory.CreateDirectory(@"C:\Temp\pp");
 
             string writePath = @"C:\Temp\ath.txt";
 
@@ -123,8 +119,19 @@ namespace bm_application
 
         public void ButtonChanged (string name, string email)
         {
-            if (name!=null && email!=null) Colorb.Background = new SolidColorBrush(Colors.Green); 
-            else Colorb.Background = new SolidColorBrush(Colors.White);
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(_email))
+            {
+                //MessageBox.Show("NOT NULL");
+                Colorb.Background = new SolidColorBrush(Colors.Green);
+                Colorb.IsEnabled = true;
+            }
+            else
+            {
+                //MessageBox.Show("All NULL");
+                Colorb.Background = new SolidColorBrush(Colors.White);
+                Colorb.IsEnabled = false;
+            }
         }
+
     }
 }
