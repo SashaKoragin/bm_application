@@ -24,9 +24,17 @@ namespace bm_application
     /// <summary>
     /// Логика взаимодействия для MyPageWindow.xaml
     /// </summary>
-    public partial class MyPageWindow
+    public partial class MyPageWindow: INotifyPropertyChanged
     {
-        MainWindow window = new MainWindow();
+        #region PropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        //MainWindow window = new MainWindow();
         public MyPageWindow()
         {
             InitializeComponent();
@@ -89,6 +97,34 @@ namespace bm_application
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private string _name, _email;
+        public string Name1
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged("Name1");
+                ButtonChanged(_name, _email); 
+            }
+        }
+        public string Email1
+        {
+            get => _email;
+            set
+            {
+                _email = value;
+                OnPropertyChanged("Email1");
+                ButtonChanged(_name, _email);
+            }
+        }
+
+        public void ButtonChanged (string name, string email)
+        {
+            if (name!=null && email!=null) Colorb.Background = new SolidColorBrush(Colors.Green); 
+            else Colorb.Background = new SolidColorBrush(Colors.White);
         }
     }
 }
