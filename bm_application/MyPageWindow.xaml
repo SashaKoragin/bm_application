@@ -39,7 +39,7 @@
             <TextBox Name="time" Text="Укажите точное время" VerticalAlignment="Center" Height="20" Width="300" Margin="4"></TextBox>
         </ComboBox>
 
-        <Button x:Name="Colorb" Click="Submit" 
+        <Button  x:Name="Colorb" Click="Submit" 
                  Height="20"  Width="100" HorizontalAlignment="Right" Margin="0,20,0,0">Отправить</Button>
         <TextBlock Height="20" HorizontalAlignment="Left" Margin="67,0,0,0" x:Name ="errormessage" VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" />
     </WrapPanel>

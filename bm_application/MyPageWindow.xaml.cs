@@ -67,9 +67,7 @@ namespace bm_application
                 errormessage.Text = "Successfully!";
                 MessageBox.Show("Спасибо за обращение. Мы обязательно с Вами свяжемся!");
             }
-
-            System.IO.Directory.CreateDirectory(@"C:\Temp\pp");
-
+            if (!Directory.Exists (@"C:\Temp")) Directory.CreateDirectory(@"C:\Temp");
             string writePath = @"C:\Temp\ath.txt";
 
             string text = "ФИО: " + name_f_s.Text + ", " + "e-mail: " + textBoxEmail.Text + ", " + "Номер телефона: " +
@@ -101,9 +99,10 @@ namespace bm_application
             get => _name;
             set
             {
+                
                 _name = value;
                 OnPropertyChanged("Name1");
-                ButtonChanged(_name, _email); 
+                ButtonChanged(Name1, Email1); 
             }
         }
         public string Email1
@@ -113,13 +112,13 @@ namespace bm_application
             {
                 _email = value;
                 OnPropertyChanged("Email1");
-                ButtonChanged(_name, _email);
+                ButtonChanged(Name1, Email1);
             }
         }
 
-        public void ButtonChanged (string name, string email)
+        void ButtonChanged (string name, string email)
         {
-            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(_email))
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(email)/*name_f_s.Text.Length == 0 && textBoxEmail.Text.Length==0*/)
             {
                 //MessageBox.Show("NOT NULL");
                 Colorb.Background = new SolidColorBrush(Colors.Green);
