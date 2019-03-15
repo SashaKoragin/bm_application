@@ -35,6 +35,7 @@ namespace bm_application
         public MyPageWindow()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         private void Submit(object sender, EventArgs e)
@@ -99,7 +100,6 @@ namespace bm_application
             get => _name;
             set
             {
-                
                 _name = value;
                 OnPropertyChanged("Name1");
                 ButtonChanged(Name1, Email1); 
@@ -118,15 +118,14 @@ namespace bm_application
 
         void ButtonChanged (string name, string email)
         {
-            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(email)/*name_f_s.Text.Length == 0 && textBoxEmail.Text.Length==0*/)
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(email))
             {
-                //MessageBox.Show("NOT NULL");
                 Colorb.Background = new SolidColorBrush(Colors.Green);
                 Colorb.IsEnabled = true;
             }
+
             else
             {
-                //MessageBox.Show("All NULL");
                 Colorb.Background = new SolidColorBrush(Colors.White);
                 Colorb.IsEnabled = false;
             }

@@ -42,7 +42,6 @@ namespace bm_application
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MyPageWindow();
 
             TextBlock txtBlock = new TextBlock();
             ImageBrush myText = new ImageBrush();
