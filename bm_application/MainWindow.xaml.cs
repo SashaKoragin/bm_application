@@ -20,6 +20,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Timers;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace bm_application
 {
@@ -31,10 +32,12 @@ namespace bm_application
         WebBrowser browser = new WebBrowser();
         ImageBrush myBrush = new ImageBrush();
         ImageBrush myBrush1 = new ImageBrush();
+        ImageBrush myBrush2 = new ImageBrush();
         Button btn_back = new Button();
         Button btn_forward = new Button();
         StackPanel panel = new StackPanel();
-        bool check;
+
+        public bool check;
 
         public MainWindow()
         {
@@ -53,7 +56,7 @@ namespace bm_application
             check = true;
             DelayedExecutionService.DelayedExecute(() =>
             {
-                if (check == true) { Screensaver(); }                
+                if (check == true) { Screensaver(); }
             });
         }
 
@@ -99,6 +102,7 @@ namespace bm_application
             canvas.Children.Clear();
             myBrush.ImageSource = Convert(Properties.Resources.bm_group);
             myBrush1.ImageSource = Convert(Properties.Resources.bm_background);
+            myBrush2.ImageSource = Convert(Properties.Resources.form_background);
             canvas.Background = myBrush;
             //myBrush.Stretch = Stretch.Fill;
         }
@@ -155,7 +159,7 @@ namespace bm_application
             drawing.Player = player;
             DrawingBrush brush = new DrawingBrush(drawing);
             canvas.Background = brush;
-            
+
         }
         #endregion
 
@@ -204,19 +208,6 @@ namespace bm_application
         }
         #endregion
 
-        #region Форма регистрации
-        private void button_click_form(object sender, EventArgs e)
-        {
-            check = true;
-            canvas.Children.Clear();
-            Grid gridform = new Grid { Height = 415, Width = 637, Background = new SolidColorBrush(Colors.White) };
-            Button btn_send = new Button { Height = 25, Width = 75, Content = "Отправить", Background = new SolidColorBrush(Colors.AntiqueWhite) };
-            gridform.Children.Add(btn_send);
-            btn_send.Margin = new Thickness(0, 10, 0, 10);
-            canvas.Children.Add(gridform);
-        }
-        #endregion
-
         #region Таймер
         public static class DelayedExecutionService
         {
@@ -225,6 +216,11 @@ namespace bm_application
             public static void DelayedExecute(Action action, int delay = 60)
             {
                 var dispatcherTimer = new DispatcherTimer();
+
+                void Reset_Timer(object sender, EventArgs e)
+                {
+                    dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 20, 0);
+                }
                 timers.Add(dispatcherTimer);
 
                 EventHandler handler = null;
@@ -236,14 +232,35 @@ namespace bm_application
                 dispatcherTimer.Tick += handler;
                 dispatcherTimer.Interval = TimeSpan.FromSeconds(delay);
                 dispatcherTimer.Start();
+                EventManager.RegisterClassHandler(typeof(Window), Window.MouseMoveEvent, new RoutedEventHandler(Reset_Timer));
+                EventManager.RegisterClassHandler(typeof(Window), Window.MouseDownEvent, new RoutedEventHandler(Reset_Timer));
+                EventManager.RegisterClassHandler(typeof(Window), Window.KeyDownEvent, new RoutedEventHandler(Reset_Timer));
             }
+
         }
+
         #endregion
 
         #region Выход
         public void button_click_exit(object sender, EventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+        #endregion
+
+        #region Форма обращения
+        private void button_click_form(object sender, EventArgs e)
+        {
+            MyPageWindow reg = new MyPageWindow();
+            check = true;
+            canvas.Children.Clear();
+            canvas.Background = new SolidColorBrush(Colors.White);
+            try
+            {
+                canvas.Children.Add(reg);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
         }
         #endregion
     }
