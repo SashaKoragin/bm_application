@@ -99,7 +99,7 @@ namespace bm_application
         public void button_click_home(object sender, EventArgs e)
         {
             check = true;
-            canvas.Children.Clear();
+            canvas.Children.RemoveAt(0);
             myBrush.ImageSource = Convert(Properties.Resources.bm_group);
             myBrush1.ImageSource = Convert(Properties.Resources.bm_background);
             myBrush2.ImageSource = Convert(Properties.Resources.form_background);
@@ -112,7 +112,7 @@ namespace bm_application
         public void button_click_url_home(object sender, EventArgs e)
         {
             check = true;
-            canvas.Children.Clear();
+            canvas.Children.RemoveAt(0);
             panel.Children.Clear();
             panel.Orientation = Orientation.Vertical;
 
@@ -148,7 +148,7 @@ namespace bm_application
         public void button_click_video(object sender, EventArgs e)
         {
             check = false;
-            canvas.Children.Clear();
+            canvas.Children.RemoveAt(0);
             MediaTimeline timeline = new MediaTimeline(new Uri(@"Resources\bm_video.mp4", UriKind.Relative));
             timeline.RepeatBehavior = RepeatBehavior.Forever;
             MediaClock clock = timeline.CreateClock();
@@ -159,7 +159,6 @@ namespace bm_application
             drawing.Player = player;
             DrawingBrush brush = new DrawingBrush(drawing);
             canvas.Background = brush;
-
         }
         #endregion
 
@@ -253,14 +252,13 @@ namespace bm_application
         {
             MyPageWindow reg = new MyPageWindow();
             check = true;
-            canvas.Children.Clear();
+            canvas.Children.RemoveAt(0);
             canvas.Background = new SolidColorBrush(Colors.White);
             try
             {
                 canvas.Children.Add(reg);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
-
         }
         #endregion
     }
