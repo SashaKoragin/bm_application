@@ -99,12 +99,15 @@ namespace bm_application
         public void button_click_home(object sender, EventArgs e)
         {
             check = true;
-            canvas.Children.RemoveAt(0);
+            canvas.Children.Clear();
             myBrush.ImageSource = Convert(Properties.Resources.bm_group);
             myBrush1.ImageSource = Convert(Properties.Resources.bm_background);
             myBrush2.ImageSource = Convert(Properties.Resources.form_background);
             canvas.Background = myBrush;
             //myBrush.Stretch = Stretch.Fill;
+            button_home.Click -= button_click_url_home;
+            button_home.Click -= button_click_video;
+            button_home.Click -= button_click_form;
         }
         #endregion
 
@@ -112,7 +115,7 @@ namespace bm_application
         public void button_click_url_home(object sender, EventArgs e)
         {
             check = true;
-            canvas.Children.RemoveAt(0);
+            canvas.Children.Clear();
             panel.Children.Clear();
             panel.Orientation = Orientation.Vertical;
 
@@ -141,6 +144,9 @@ namespace bm_application
 
             btn_back.Click += GoBack_Click;
             btn_forward.Click += GoForward_Click;
+            button_url_home.Click -= button_click_home;
+            button_url_home.Click -= button_click_video;
+            button_url_home.Click -= button_click_form;
         }
         #endregion
 
@@ -148,7 +154,7 @@ namespace bm_application
         public void button_click_video(object sender, EventArgs e)
         {
             check = false;
-            canvas.Children.RemoveAt(0);
+            canvas.Children.Clear();
             MediaTimeline timeline = new MediaTimeline(new Uri(@"Resources\bm_video.mp4", UriKind.Relative));
             timeline.RepeatBehavior = RepeatBehavior.Forever;
             MediaClock clock = timeline.CreateClock();
@@ -252,7 +258,7 @@ namespace bm_application
         {
             MyPageWindow reg = new MyPageWindow();
             check = true;
-            canvas.Children.RemoveAt(0);
+            canvas.Children.Clear();
             canvas.Background = new SolidColorBrush(Colors.White);
             try
             {
