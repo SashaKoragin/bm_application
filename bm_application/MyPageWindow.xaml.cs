@@ -24,14 +24,18 @@ namespace bm_application
     /// <summary>
     /// Логика взаимодействия для MyPageWindow.xaml
     /// </summary>
-    public partial class MyPageWindow
+    public partial class MyPageWindow: INotifyPropertyChanged
     {
-        MainWindow window = new MainWindow();
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public MyPageWindow()
         {
             InitializeComponent();
-            this.DataContext = this;
-
+            DataContext = this;
         }
 
         private void Submit(object sender, EventArgs e)
@@ -64,9 +68,7 @@ namespace bm_application
                 errormessage.Text = "Successfully!";
                 MessageBox.Show("Спасибо за обращение. Мы обязательно с Вами свяжемся!");
             }
-
-            System.IO.Directory.CreateDirectory(@"C:\Temp");
-
+            if (!Directory.Exists (@"C:\Temp")) Directory.CreateDirectory(@"C:\Temp");
             string writePath = @"C:\Temp\ath.txt";
 
             string text = "ФИО: " + name_f_s.Text + ", " + "e-mail: " + textBoxEmail.Text + ", " + "Номер телефона: " +
@@ -91,5 +93,43 @@ namespace bm_application
                 Console.WriteLine(ex.Message);
             }
         }
+
+        private string _name, _email;
+        public string Name1
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged("Name1");
+                ButtonChanged(Name1, Email1); 
+            }
+        }
+        public string Email1
+        {
+            get => _email;
+            set
+            {
+                _email = value;
+                OnPropertyChanged("Email1");
+                ButtonChanged(Name1, Email1);
+            }
+        }
+
+        void ButtonChanged (string name, string email)
+        {
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(email))
+            {
+                Colorb.Background = new SolidColorBrush(Colors.Green);
+                Colorb.IsEnabled = true;
+            }
+
+            else
+            {
+                Colorb.Background = new SolidColorBrush(Colors.White);
+                Colorb.IsEnabled = false;
+            }
+        }
+
     }
 }

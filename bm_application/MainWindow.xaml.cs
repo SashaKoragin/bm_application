@@ -42,6 +42,7 @@ namespace bm_application
         public MainWindow()
         {
             InitializeComponent();
+
             TextBlock txtBlock = new TextBlock();
             ImageBrush myText = new ImageBrush();
             txtBlock.Height = 415;
@@ -256,10 +257,10 @@ namespace bm_application
         #region Форма обращения
         private void button_click_form(object sender, EventArgs e)
         {
+            canvas?.Children.Clear();
+            canvas.Background = new SolidColorBrush(Colors.White);
             MyPageWindow reg = new MyPageWindow();
             check = true;
-            canvas.Children.Clear();
-            canvas.Background = new SolidColorBrush(Colors.White);
             try
             {
                 canvas.Children.Add(reg);
