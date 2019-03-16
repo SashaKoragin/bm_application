@@ -36,6 +36,9 @@ namespace bm_application
         Button btn_back = new Button();
         Button btn_forward = new Button();
         StackPanel panel = new StackPanel();
+        MediaPlayer player = new MediaPlayer();
+        MediaPlayer player1 = new MediaPlayer();
+
 
         public bool check;
 
@@ -64,14 +67,12 @@ namespace bm_application
         public void Screensaver()
         {
             canvas.Children.Clear();
-            MediaTimeline timeline = new MediaTimeline(new Uri(@"Resources\bm_video.mp4", UriKind.Relative));
-            timeline.RepeatBehavior = RepeatBehavior.Forever;
-            MediaClock clock = timeline.CreateClock();
-            MediaPlayer player = new MediaPlayer();
-            player.Clock = clock;
+            player.Open(new Uri(@"Resources\bm_video.mp4", UriKind.Relative));
+            player1.Stop();
             VideoDrawing drawing = new VideoDrawing();
-            drawing.Rect = new Rect(0, 0, 50, 50);
+            drawing.Rect = new Rect(0, 0, 300, 200);
             drawing.Player = player;
+            player.Play();
             DrawingBrush brush = new DrawingBrush(drawing);
             canvas.Background = brush;
         }
@@ -100,15 +101,14 @@ namespace bm_application
         public void button_click_home(object sender, EventArgs e)
         {
             check = true;
+            player.Stop();
+            player1.Stop();
             canvas.Children.Clear();
             myBrush.ImageSource = Convert(Properties.Resources.bm_group);
             myBrush1.ImageSource = Convert(Properties.Resources.bm_background);
             myBrush2.ImageSource = Convert(Properties.Resources.form_background);
             canvas.Background = myBrush;
             //myBrush.Stretch = Stretch.Fill;
-            button_home.Click -= button_click_url_home;
-            button_home.Click -= button_click_video;
-            button_home.Click -= button_click_form;
         }
         #endregion
 
@@ -116,6 +116,8 @@ namespace bm_application
         public void button_click_url_home(object sender, EventArgs e)
         {
             check = true;
+            player.Stop();
+            player1.Stop();
             canvas.Children.Clear();
             panel.Children.Clear();
             panel.Orientation = Orientation.Vertical;
@@ -145,9 +147,6 @@ namespace bm_application
 
             btn_back.Click += GoBack_Click;
             btn_forward.Click += GoForward_Click;
-            button_url_home.Click -= button_click_home;
-            button_url_home.Click -= button_click_video;
-            button_url_home.Click -= button_click_form;
         }
         #endregion
 
@@ -156,14 +155,11 @@ namespace bm_application
         {
             check = false;
             canvas.Children.Clear();
-            MediaTimeline timeline = new MediaTimeline(new Uri(@"Resources\bm_video.mp4", UriKind.Relative));
-            timeline.RepeatBehavior = RepeatBehavior.Forever;
-            MediaClock clock = timeline.CreateClock();
-            MediaPlayer player = new MediaPlayer();
-            player.Clock = clock;
+            player1.Open(new Uri(@"Resources\bm_video.mp4", UriKind.Relative));
             VideoDrawing drawing = new VideoDrawing();
-            drawing.Rect = new Rect(0, 0, 50, 50);
-            drawing.Player = player;
+            drawing.Rect = new Rect(0, 0, 300, 200);
+            drawing.Player = player1;
+            player1.Play();
             DrawingBrush brush = new DrawingBrush(drawing);
             canvas.Background = brush;
         }
@@ -225,7 +221,7 @@ namespace bm_application
 
                 void Reset_Timer(object sender, EventArgs e)
                 {
-                    dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 20, 0);
+                    dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 60, 0);
                 }
                 timers.Add(dispatcherTimer);
 
@@ -257,7 +253,9 @@ namespace bm_application
         #region Форма обращения
         private void button_click_form(object sender, EventArgs e)
         {
-            canvas?.Children.Clear();
+            canvas.Children.Clear();
+            player.Stop();
+            player1.Stop();
             canvas.Background = new SolidColorBrush(Colors.White);
             MyPageWindow reg = new MyPageWindow();
             check = true;
@@ -267,6 +265,6 @@ namespace bm_application
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
-        #endregion
+        #endregion        
     }
 }

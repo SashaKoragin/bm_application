@@ -120,7 +120,7 @@ namespace bm_application
         {
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(email))
             {
-                Colorb.Background = new SolidColorBrush(Colors.Green);
+                Colorb.Background = new SolidColorBrush(Colors.White);
                 Colorb.IsEnabled = true;
             }
 
