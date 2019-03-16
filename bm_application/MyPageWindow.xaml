@@ -20,14 +20,15 @@
     </WrapPanel>
     <WrapPanel  Orientation="Vertical"  Grid.Column="1" Background="White">
         <TextBox Name="name_f_s"
-                 Text="{Binding Path=Name1, UpdateSourceTrigger=PropertyChanged}"
+                 
                  Width="300" Margin="4"
                  HorizontalAlignment="Left"></TextBox>
         <TextBox Name="textBoxEmail"
                  Text="{Binding Path=Email1, UpdateSourceTrigger=PropertyChanged}"
                  Width="300" Margin="4"
                  HorizontalAlignment="Left"></TextBox>
-        <TextBox  Name="tel_number" Text="+7 (999) 999-99-99"
+        <TextBox Name="tel_number" 
+                 Text="{Binding Path=Name1, UpdateSourceTrigger=PropertyChanged}"
                  Width="300" Margin="4"
                  HorizontalAlignment="Left"></TextBox>
 
